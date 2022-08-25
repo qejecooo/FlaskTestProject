@@ -1,0 +1,5 @@
+Flask
+requests
+environs
+flask-sqlalchemy
+psycopg2-binary

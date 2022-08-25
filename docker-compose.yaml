@@ -1,0 +1,28 @@
+services:
+    flask_test_project:
+        build: ./
+        container_name: flask_test_project_container
+        environment:
+            - FLASK_APP=FlaskTestProject/app.py
+            - FLASK_DEBUG=development
+            - DATABASE_URL=postgresql://{PGUSER}:{PGPASSWORD}@{db_host}:{PORT}/{DATABASE}
+        ports:
+            - '5000:5000'
+
+    postgres:
+        image: postgres:latest
+        container_name: postgres_container
+        environment:
+            POSTGRES_DB: "postgres_db"
+            POSTGRES_USER: "dstolbov"
+            POSTGRES_PASSWORD: "1234"
+        volumes:
+            - postgres_volume:/var/lib/postgresql/data
+        ports:
+            - '10110:5432'
+
+volumes:
+    # This is the volume that will be mounted to the container
+    # The volume will be created if it does not exist
+    # The volume will be mounted to /data
+    postgres_volume:
