@@ -8,21 +8,22 @@ services:
             - DATABASE_URL=postgresql://{PGUSER}:{PGPASSWORD}@{db_host}:{PORT}/{DATABASE}
         ports:
             - '5000:5000'
+        volumes:
+            - ./.env:/usr/src/app/.env
+        depends_on:
+            -   postgres
 
     postgres:
         image: postgres:latest
         container_name: postgres_container
         environment:
             POSTGRES_DB: "postgres_db"
-            POSTGRES_USER: "dstolbov"
-            POSTGRES_PASSWORD: "1234"
+            POSTGRES_USER: "PGUSER" #Enter your Postgres username here
+            POSTGRES_PASSWORD: "PGPASSWORD" #Enter your password here
         volumes:
             - postgres_volume:/var/lib/postgresql/data
-        ports:
-            - '10110:5432'
+        expose:
+            - "5432"
 
 volumes:
-    # This is the volume that will be mounted to the container
-    # The volume will be created if it does not exist
-    # The volume will be mounted to /data
     postgres_volume:
